@@ -20,11 +20,11 @@ report an issue to the issue tracker.
 
 ## Pre-requisites
 
-Janus is built primarily for [MacVim](http://code.google.com/p/macvim/) on OSX.
-Download it [here](https://github.com/b4winckler/macvim/downloads).
+This Janus port is built primarily for [VIM](http://www.vim.org/download.php#pc) on Windows.
 
-Alternatively, you can use Janus with the bundled console `vim` installation on
-OSX (via Terminal), or with any other `vim` or `gvim` installation.
+Alternatively, you can use Janus with any other `vim` or `gvim` installation.
+
+For a better experience in OSX see original [Janus for MacVim](https://github.com/carlhuda/janus).
 
 Linux users can install `gvim` for an experience identical to MacVim.
 On Debian/Ubuntu, simply `apt-get install vim-gnome`. For remote
@@ -36,30 +36,29 @@ support.
 
 ## Installation
 
-0. `for i in ~/.vim ~/.vimrc ~/.gvimrc; do [ -e $i ] && mv $i $i.old;
-   done`
-1. `git clone git://github.com/carlhuda/janus.git ~/.vim`
-2. `cd ~/.vim`
+0. `for %%i IN (vimfiles _vimrc _gvimrc) do IF EXIST "%USERPROFILE%\%%i" call rename "%USERPROFILE%\%%i" %%i.pre-janus`
+1. `git clone git://github.com/fcarriedo/janus-win.git "%USERPROFILE%\vimfiles"`
+2. `cd "%USERPROFILE%\vimfiles"`
 3. `rake`
 
 or
 
-  `curl https://github.com/carlhuda/janus/raw/master/bootstrap.sh -o - | sh`
+  `curl https://github.com/fcarriedo/janus-win/raw/master/bootstrap.bat -o - | sh`
 
 ## Customization
 
-Create `~/.vimrc.local` and `~/.gvimrc.local` for any local
+Create `~/_vimrc.local` and `~/_gvimrc.local` for any local
 customizations.
 
 For example, to override the default color schemes:
 
-    echo color desert  > ~/.vimrc.local
-    echo color molokai > ~/.gvimrc.local
+    echo color desert  > ~/_vimrc.local
+    echo color molokai > ~/_gvimrc.local
 
 ## Updating to the latest version
 
 To update to the latest version of the distribution, just run `rake`
-again inside your `~/.vim` directory.
+again inside your `~/vimfiles` directory.
 
 # Intro to VIM
 
