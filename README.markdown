@@ -43,7 +43,7 @@ support.
 
 or
 
-  `curl https://github.com/fcarriedo/janus-win/raw/master/bootstrap.bat -o bootstrap.bat & bootstrap.bat`
+  `curl https://github.com/fcarriedo/janus-win/raw/master/bootstrap.cmd -o bootstrap.cmd & bootstrap.cmd`
 
 ## Customization
 
