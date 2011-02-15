@@ -120,8 +120,8 @@ if filewritable(expand("~/vimfiles/tmp-backup")) != 2
   call mkdir(expand("~/vimfiles/tmp-backup"))
 endif
 
-let g:backupdir = expand("~/vimfiles/tmp-backup")
-let g:directory = expand("~/vimfiles/tmp-backup")
+set backupdir=$HOME/vimfiles/backup
+set directory=$HOME/vimfiles/backup
 
 " Include user's local vim config
 if filereadable(expand("~/_vimrc.local"))
