@@ -20,6 +20,8 @@ report an issue to the issue tracker.
 
 ## Pre-requisites
 
+[cURL](http://www.softpedia.com/get/Programming/File-Editors/cURL.shtml) for windows and make it available in your path.
+
 This Janus port is built primarily for [VIM](http://www.vim.org/download.php#pc) on Windows.
 
 Alternatively, you can use Janus with any other `vim` or `gvim` installation.
