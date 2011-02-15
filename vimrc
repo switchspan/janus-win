@@ -6,6 +6,7 @@ syntax on
 
 " Set encoding
 set encoding=utf-8
+set guifont=Courier_New:h8:cANSI
 
 " Whitespace stuff
 set nowrap
@@ -115,13 +116,14 @@ set modelines=10
 color desert
 
 " Directories for swp files
-set backupdir=~/.vim/backup
-set directory=~/.vim/backup
+if filewritable(expand("~/vimfiles/tmp-backup")) != 2
+  call mkdir(expand("~/vimfiles/tmp-backup"))
+endif
 
-" MacVIM shift+arrow-keys behavior (required in .vimrc)
-let macvim_hig_shift_movement = 1
+let g:backupdir = expand("~/vimfiles/tmp-backup")
+let g:directory = expand("~/vimfiles/tmp-backup")
 
 " Include user's local vim config
-if filereadable(expand("~/.vimrc.local"))
-  source ~/.vimrc.local
+if filereadable(expand("~/_vimrc.local"))
+  source ~/_vimrc.local
 endif

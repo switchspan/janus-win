@@ -16,7 +16,7 @@ def vim_plugin_task(name, repo=nil)
     if repo
       file dir => "tmp" do
         if repo =~ /git$/
-          sh "git clone #{repo} #{dir}"
+          sh "git clone #{repo} \"#{dir}\""
 
         elsif repo =~ /download_script/
           if filename = `curl --silent --head #{repo} | grep attachment`[/filename=(.+)/,1]
@@ -42,7 +42,7 @@ def vim_plugin_task(name, repo=nil)
           dirname  = File.basename(filename, '.tar.gz')
 
           sh "tar zxvf tmp/#{filename}"
-          sh "mv #{dirname} #{dir}"
+          sh "mv #{dirname} \"#{dir}\""
 
         when /vba(\.gz)?$/
           if filename =~ /gz$/
@@ -93,7 +93,7 @@ def vim_plugin_task(name, repo=nil)
           else
             subdirs.each do |subdir|
               if File.exists?(subdir)
-                sh "cp -rf #{subdir}/* #{cwd}/#{subdir}/"
+                sh "cp -rf #{subdir}/* \"#{cwd}/#{subdir}/\""
               end
             end
           end
@@ -120,7 +120,6 @@ def vim_plugin_task(name, repo=nil)
   task :default => name
 end
 
-vim_plugin_task "ack.vim",          "git://github.com/mileszs/ack.vim.git"
 vim_plugin_task "color-sampler",    "git://github.com/vim-scripts/Color-Sampler-Pack.git"
 vim_plugin_task "conque",           "http://conque.googlecode.com/files/conque_1.1.tar.gz"
 vim_plugin_task "fugitive",         "git://github.com/tpope/vim-fugitive.git"
@@ -151,17 +150,6 @@ vim_plugin_task "irblack",          "git://github.com/wgibbs/vim-irblack.git"
 vim_plugin_task "vim-coffee-script","git://github.com/kchmck/vim-coffee-script.git"
 vim_plugin_task "syntastic",        "git://github.com/scrooloose/syntastic.git"
 
-vim_plugin_task "command_t",        "git://github.com/wincent/Command-T.git" do
-  sh "find ruby -name '.gitignore' | xargs rm"
-  Dir.chdir "ruby/command-t" do
-    if `rvm > /dev/null 2>&1` && $?.exitstatus == 0
-      sh "rvm system ruby extconf.rb"
-    else
-      sh "/usr/bin/ruby extconf.rb" # assume /usr/bin/ruby is system ruby
-    end
-    sh "make clean && make"
-  end
-end
 
 vim_plugin_task "janus_themes" do
   # custom version of railscasts theme
@@ -207,15 +195,15 @@ end
 desc "Update the documentation"
 task :update_docs do
   puts "Updating VIM Documentation..."
-  system "vim -e -s <<-EOF\n:helptags ~/.vim/doc\n:quit\nEOF"
+  system "vim -e -s <<-EOF\n:helptags ~/vimfiles/doc\n:quit\nEOF"
 end
 
-desc "link vimrc to ~/.vimrc"
-task :link_vimrc do
+desc "link vimrc to ~/_vimrc"
+task :copy_vimrc do
   %w[ vimrc gvimrc ].each do |file|
-    dest = File.expand_path("~/.#{file}")
+    dest = File.expand_path("~/_#{file}")
     unless File.exist?(dest)
-      ln_s(File.expand_path("../#{file}", __FILE__), dest)
+      sh "cp #{file} \"#{dest}\""
     end
   end
 end
@@ -231,9 +219,28 @@ end
 
 task :default => [
   :update_docs,
-  :link_vimrc
+  :copy_vimrc
 ]
 
 desc "Clear out all build artifacts and rebuild the latest Janus"
 task :upgrade => [:clean, :pull, :default]
 
+desc "Install Command-T only if tools needed are available"
+task :install_command_t do
+  vim_plugin_task "command_t",        "git://github.com/wincent/Command-T.git" do
+    sh "find ruby -name '.gitignore' | xargs rm"
+    Dir.chdir "ruby/command-t" do
+      if `rvm > /dev/null 2>&1` && $?.exitstatus == 0
+        sh "rvm system ruby extconf.rb"
+      else
+        sh "/usr/bin/ruby extconf.rb" # assume /usr/bin/ruby is system ruby
+      end
+      sh "make clean && make"
+    end
+  end
+end
+
+desc "Install Ack only if available"
+task :install_ack do
+  vim_plugin_task "ack.vim",          "git://github.com/mileszs/ack.vim.git"
+end
