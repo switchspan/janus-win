@@ -22,7 +22,7 @@ if has("gui")
   map <C-e> :call StartTerm()<CR>
 
   " Command-/ to toggle comments
-  map <C-/> <plug>NERDCommenterToggle<CR>
+  vmap <Leader>c <plug>NERDCommenterToggle<CR>
 
   " Command-][ to increase/decrease indentation
   vmap <C-]> >gv
