@@ -45,7 +45,7 @@ support.
 
 or
 
-  `curl https://github.com/fcarriedo/janus-win/raw/master/bootstrap.cmd -o bootstrap.cmd & bootstrap.cmd`
+  `curl https://raw.github.com/fcarriedo/janus-win/master/bootstrap.cmd -k -o bootstrap.cmd & bootstrap.cmd`
 
 ## Customization
 
