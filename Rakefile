@@ -36,18 +36,19 @@ def vim_plugin_task(name, repo=nil)
 
         case filename
         when /zip$/
-          sh "7za.exe x ./tmp/#{filename} -o #{dir}"
+          sh "7za.exe x ./tmp/#{filename}"
 
         when /tar\.gz$/
           dirname  = File.basename(filename, '.tar.gz')
 
-          sh "7za.exe x ./tmp/#{filename} -o #{dir}"
+          sh "7za.exe x ./tmp/#{filename}"
           #sh "mv #{dirname} \"#{dir}\""
 
         when /vba(\.gz)?$/
           if filename =~ /gz$/
-            sh "gunzip -f tmp/#{filename}"
-            filename = File.basename(filename, '.gz')
+            #sh "gunzip -f tmp/#{filename}"
+            sh "7za.exe x ./tmp/#{filename}"
+            #filename = File.basename(filename, '.gz')
           end
 
           # TODO: move this into the install task
@@ -93,7 +94,7 @@ def vim_plugin_task(name, repo=nil)
           else
             subdirs.each do |subdir|
               if File.exists?(subdir)
-                sh "xcopy /E /Y #{subdir}/* \"#{cwd}/#{subdir}/\""
+                sh "xcopy /E /Y #{subdir}/ \"#{cwd}/#{subdir}/\""
               end
             end
           end
