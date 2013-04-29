@@ -36,13 +36,13 @@ def vim_plugin_task(name, repo=nil)
 
         case filename
         when /zip$/
-          sh "unzip -o tmp/#{filename} -d #{dir}"
+          sh "7za.exe x ./tmp/#{filename} -o #{dir}"
 
         when /tar\.gz$/
           dirname  = File.basename(filename, '.tar.gz')
 
-          sh "tar zxvf tmp/#{filename}"
-          sh "mv #{dirname} \"#{dir}\""
+          sh "7za.exe x ./tmp/#{filename} -o #{dir}"
+          #sh "mv #{dirname} \"#{dir}\""
 
         when /vba(\.gz)?$/
           if filename =~ /gz$/
@@ -121,7 +121,7 @@ def vim_plugin_task(name, repo=nil)
 end
 
 vim_plugin_task "colour-sampler",    "git://github.com/vim-scripts/Colour-Sampler-Pack.git"
-vim_plugin_task "conque",           "http://conque.googlecode.com/files/conque_1.1.tar.gz"
+vim_plugin_task "conque",           "http://conque.googlecode.com/files/conque_2.2.zip"
 vim_plugin_task "fugitive",         "git://github.com/tpope/vim-fugitive.git"
 vim_plugin_task "git",              "git://github.com/tpope/vim-git.git"
 vim_plugin_task "haml",             "git://github.com/tpope/vim-haml.git"
