@@ -93,7 +93,7 @@ def vim_plugin_task(name, repo=nil)
           else
             subdirs.each do |subdir|
               if File.exists?(subdir)
-                sh "cp -rf #{subdir}/* \"#{cwd}/#{subdir}/\""
+                sh "xcopy /E /Y #{subdir}/* \"#{cwd}/#{subdir}/\""
               end
             end
           end
