@@ -36,18 +36,14 @@ def vim_plugin_task(name, repo=nil)
 
         case filename
         when /zip$/
-          sh "7za.exe e ./tmp/#{filename} -o#{dir} -r"
+          sh "7za.exe e ./tmp/#{filename} -o#{dir} -r -y"
 
         when /tar\.gz$/
-          #dirname  = File.basename(filename, '.tar.gz')
-          sh "7za.exe e ./tmp/#{filename} -o#{dir} -r"
-          #sh "mv #{dirname} \"#{dir}\""
+          sh "7za.exe e ./tmp/#{filename} -o#{dir} -r -y"
 
         when /vba(\.gz)?$/
           if filename =~ /gz$/
-            #sh "gunzip -f tmp/#{filename}"
-            sh "7za.exe e ./tmp/#{filename} -o#{dir} -r"
-            #filename = File.basename(filename, '.gz')
+            sh "7za.exe e ./tmp/#{filename} -o#{dir} -r -y"
           end
 
           # TODO: move this into the install task
