@@ -199,7 +199,7 @@ task :copy_vimrc do
   %w[ vimrc gvimrc ].each do |file|
     dest = File.expand_path("~/_#{file}")
     unless File.exist?(dest)
-      sh "cp #{file} \"#{dest}\""
+      sh "copy #{file} \"#{dest}\""
     end
   end
 end
