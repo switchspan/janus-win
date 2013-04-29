@@ -28,7 +28,7 @@ def vim_plugin_task(name, repo=nil)
 
         elsif repo =~ /(tar|gz|vba|zip)$/
           filename = File.basename(repo)
-          sh "curl #{repo} > tmp/#{filename}"
+          sh "curl.exe #{repo} > tmp/#{filename}"
 
         else
           raise ArgumentError, 'unrecognized source url for plugin'
